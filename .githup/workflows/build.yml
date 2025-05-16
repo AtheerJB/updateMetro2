@@ -1,0 +1,9 @@
+on: push
+jobs:
+  build-node:
+  first-job:
+    runs-on: windows-latest
+    container: node:14
+    steps:
+      - run: node --version
+      - run: npm --version

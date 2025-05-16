@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            width: 100%;
+            padding: 10px 0;
+        }
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+        .content {
+            padding: 50px;
+            text-align: center;
+        }
+        .ticket-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .ticket {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .ticket:hover {
+            transform: translateY(-5px);
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+        }
+        #noTicketsMessage {
+            display: none;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .buy-ticket-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .buy-ticket-btn:hover {
+            background-color: #575757;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="ticket_booking.html">Ticket Booking</a>
+        <a href="lines.html">Lines</a>
+        <a href="contact.html">Contact</a>
+        <a href="purchase_history.html">Purchase History</a>
+    </div>
+
+    <div class="content">
+        <h2>Purchase History</h2>
+        <div class="ticket-list" id="ticketList"></div>
+        <p id="noTicketsMessage">You have no purchase history yet.</p>
+        <a href="ticket_booking.html" class="buy-ticket-btn">Buy a Ticket</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Riyadh Public Transportation</p>
+    </div>
+
+    <script>
+        function loadPurchaseHistory() {
+            const ticketList = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+            const ticketListContainer = document.getElementById('ticketList');
+            const noTicketsMessage = document.getElementById('noTicketsMessage');
+
+            if (ticketList.length === 0) {
+                noTicketsMessage.style.display = 'block';
+            } else {
+                noTicketsMessage.style.display = 'none';
+                ticketListContainer.innerHTML = ''; 
+                ticketList.forEach((ticket, index) => {
+                    const ticketElement = document.createElement('div');
+                    ticketElement.className = 'ticket';
+                    ticketElement.innerHTML = `
+                        <h3>${ticket.type}</h3>
+                        <p><strong>Price:</strong> ${ticket.price}</p>
+                        <p><strong>Date:</strong> ${new Date(ticket.date).toLocaleString('en-US', { timeZone: 'Asia/Riyadh' })}</p>
+                        <button class="delete-btn" onclick="deleteTicket(${index})">Delete</button>
+                    `;
+                    ticketListContainer.appendChild(ticketElement);
+                });
+            }
+        }
+
+        function deleteTicket(index) {
+            const ticketList = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+            ticketList.splice(index, 1);
+            localStorage.setItem('purchaseHistory', JSON.stringify(ticketList)); 
+            loadPurchaseHistory(); 
+        }
+
+        window.onload = function() {
+            loadPurchaseHistory();
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy and Security</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+        .logo {
+            position: fixed;
+            top: 0px;
+            left: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: rgb(249, 248, 248);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333; 
+            width: 100%; 
+            padding: 5px 0; 
+            position: relative; 
+            z-index: 1; 
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 40px auto; 
+        }
+
+        .protection-list {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .header-text {
+            margin-bottom: 20px; 
+            font-weight: bold;
+            color: #0f0f0f;
+            font-size: 1.3em; 
+        }
+
+        .protection-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px; 
+        }
+
+        .circle {
+            background-color: white; 
+            border-radius: 50%; 
+            width: 50px; 
+            height: 50px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 15px; 
+        }
+
+        .circle img {
+            width: 70%; 
+            height: 70%; 
+            border-radius: 0%; 
+            object-fit: cover; 
+        }
+
+        .text-container {
+            font-weight: bold; 
+        }
+
+        .description {
+            margin: 5px 0; 
+            font-size: 0.9em; 
+            color: #151616; 
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">Riyadh Metro</div>
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="ticket_booking.html">Ticket Booking</a>
+        <a href="lines.html">Lines</a>
+        <a href="contact.html">Contact</a>
+      
+    </div>
+
+    <div class="content">
+        <h1>Privacy and Security</h1>
+        
+        <div class="protection-list">
+            <div class="header-text">Your privacy is important to us, and we take the security of your personal information seriously. We are committed to implementing a variety of measures to ensure that your data is protected, as outlined in the steps below:</div>
+            
+            <div class="protection-item">
+                <div class="circle">
+                    <img src="Data Encryption.png" alt="Data Encryption">
+                </div>
+                <div class="text-container">Data Encryption
+                    <div class="description">SSL/TLS encryption is used to protect personal information,
+    
+                        <p>ensuring that all transactions and personal data are encrypted with the latest security protocols.</p>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="protection-item">
+                <div class="circle">
+                    <img src="Secure Payments.jpg" alt="Secure Payments">
+                </div>
+                <div class="text-container">Secure Payments
+                    <div class="description">We use trusted payment providers to safeguard your payment details.</div>
+                </div>
+            </div>
+
+            <div class="protection-item">
+                <div class="circle">
+                    <img src="Privacy Policy.jpg" alt="Privacy Policy">
+                </div>
+                <div class="text-container">Privacy Policy
+                    <div class="description">Your information will never be shared with third parties without your consent.</div>
+                </div>
+            </div>
+
+            <div class="protection-item">
+                <div class="circle">
+                    <img src="Account Protection.jpg" alt="Account Protection">
+                </div>
+                <div class="text-container">Account Protection
+                    <div class="description">Use strong passwords and enable two-factor authentication for added security.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

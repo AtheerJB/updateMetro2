@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Riyadh Metro</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: rgb(249, 248, 248);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .logo {
+            position: fixed; 
+            top: 0px; 
+            left: 20px; 
+            font-size: 1.5em; 
+            font-weight: bold; 
+            color: rgb(249, 248, 248); 
+            padding: 10px; 
+            border-radius: 5px; 
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .content h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 30%;
+            min-width: 250px; 
+            text-align: center;
+            margin: 10px;
+        }
+
+        .feature h3 {
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #575757;
+        }
+
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    
+<div class="header">
+    <h1>About Riyadh Metro</h1>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="ticket_booking.html">Ticket Booking</a>
+        <a href="Lines.html">Lines</a>
+        <a href="contact.html">Contact</a>
+        <a href="Purchase History.html">Purchase History</a>
+
+        
+        <div class="logo">Riyadh Metro</div>
+    </div>
+</div>
+
+<div class="content">
+    <h2>Enhancing Transportation in Riyadh</h2>
+    <p>The Riyadh Metro is a modern public transportation system designed to enhance mobility in the city. Spanning over 176 kilometers, it features six lines and 85 stations, providing efficient and reliable service to residents and visitors.</p>
+    <p>Our goal is to reduce traffic congestion, promote sustainable transport, and improve air quality in Riyadh. With advanced technology and state-of-the-art trains, the Riyadh Metro is set to revolutionize urban transit in the capital.</p>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <h3>Driver Screening</h3>
+        <p>All drivers undergo rigorous screening to ensure safety and reliability.</p>
+    </div>
+    <div class="feature">
+        <h3>Community Guidelines</h3>
+        <p>We promote respectful behavior to enhance the travel experience for everyone.</p>
+    </div>
+    <div class="feature">
+        <h3>Customer Care Center</h3>
+        <p>Our support team is available 24/7 to assist you with any inquiries.</p>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

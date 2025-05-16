@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riyadh Metro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body { background-color: white; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .logo { position: fixed; top: 0px; left: 20px; font-size: 1.5em; font-weight: bold; color: rgb(249, 248, 248); padding: 10px; border-radius: 5px; }
+        .navbar { display: flex; justify-content: center; background-color: #333; width: 100%; padding: 5px 0; position: relative; z-index: 1; }
+        .navbar a { color: white; padding: 10px 15px; text-decoration: none; transition: background-color 0.3s; }
+        .navbar a:hover { background-color: #575757; }
+        #map { height: 500px; width: 100%; margin-top: 20px; }
+        .container { display: flex; width: 100%; }
+        .controls { width: 30%; padding: 20px; background: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-left: 10px; border-radius: 8px; }
+        .controls h3 { margin-top: 0; display: flex; align-items: center; }
+        .controls h3 i { margin-right: 10px; font-size: 24px; }
+        .controls select { padding: 5px; margin-bottom: 10px; width: calc(100% - 10px); border: 1px solid #ccc; border-radius: 5px; }
+        .controls button { padding: 5px; width: 100%; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .controls button:hover { background-color: #218838; }
+        .result-card { margin-top: 20px; background-color: #f9f9f9; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: center; }
+        .train-info img { width: 50px; height: 50px; }
+        .station-list { margin-top: 20px; text-align: left; }
+        .station-list ul { list-style-type: none; padding: 0; }
+        .station-list li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Riyadh Metro</div>
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="ticket_booking.html">Ticket Booking</a>
+        <a href="lines.html">Lines</a>
+        <a href="contact.html">Contact</a>
+        <a href="Purchase History.html">Purchase History</a>
+    </div>
+
+    <div class="container">
+        <div id="map"></div>
+        <div class="controls">
+            <h3><i class="fas fa-map-signs"></i> Find Shortest Path</h3>
+            <select id="start">
+                <option value="" disabled selected>Select Start Station</option>
+            </select>
+            <select id="end">
+                <option value="" disabled selected>Select End Station</option>
+            </select>
+            <button id="find-path">Find Path</button>
+            <div id="result" class="result-card" style="display:none;">
+                <h4>Route Information</h4>
+                <div class="train-info">
+                    <img src="waiking.png" alt="Train Image">
+                    <div>
+                        <div class="train-number">Route: <span id="route-name"></span></div>
+                        <div class="time">Arrival time: <span id="estimated-time"></span></div>
+                        <div class="stops">Distance: <span class="distance"></span> km</div>
+                    </div>
+                </div>
+            </div>
+            <div class="station-list">
+                <h4>Stations on Route</h4>
+                <ul id="station-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const metroLines = {
+            "Blue Line": { length: 38, stations: [
+                "King Saud University",
+                "Al-Batha",
+                "Al-Malaz",
+                "Mekkah Street",
+                "Al-Khobar",
+                "Al-Jasr",
+                "Al-Dhahran",
+                "King Abdulaziz Square",
+                "Rimal",
+                "Al-Quds",
+                "Prince Sultan",
+                "King Khalid International Airport"
+            ]},
+            "Red Line": { length: 25.3, stations: [
+                "King Fahad Road",
+                "Al-Murabba",
+                "Al-Diriyah",
+                "Qasim",
+            ]},
+            "Orange Line": { length: 40.7, stations: [
+            ]},
+        };
+
+        const stations = [];
+        const stationCoordinates = {};
+        
+        const distanceMatrix = [
+            [0, 2.0, 5.5, 8.0],
+            [2.0, 0, 3.0, 7.0],
+            [5.5, 3.0, 0, 6.2],
+            [8.0, 7.0, 6.2, 0]
+        ];
+
+        Object.keys(metroLines).forEach((line) => {
+            const { stations: stationCount } = metroLines[line];
+
+            for (let i = 0; i < stationCount.length; i++) {
+                const stationName = stationCount[i];
+                stations.push(stationName);
+
+                stationCoordinates[stationName] = [
+                    24.7 + Math.random() * 0.1,
+                    46.6 + Math.random() * 0.1
+                ];
+            }
+        });
+
+        const map = L.map('map').setView([24.7136, 46.6753], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        stations.forEach(station => {
+            L.marker(stationCoordinates[station]).addTo(map).bindPopup(station);
+            document.getElementById("start").innerHTML += `<option value="${station}">${station}</option>`;
+            document.getElementById("end").innerHTML += `<option value="${station}">${station}</option>`;
+        });
+
+        function dijkstra(start, end) {
+            const distances = {};
+            const parents = {};
+            const visited = new Set();
+
+            stations.forEach(station => {
+                distances[station] = Infinity;
+                parents[station] = null;
+            });
+            distances[start] = 0;
+
+            let node = start;
+            while (node) {
+                const nodeIndex = stations.indexOf(node);
+                const neighbors = distanceMatrix[nodeIndex];
+
+                for (let i = 0; i < neighbors.length; i++) {
+                    if (neighbors[i] !== Infinity && !visited.has(stations[i])) {
+                        let newDist = distances[node] + neighbors[i];
+                        if (newDist < distances[stations[i]]) {
+                            distances[stations[i]] = newDist;
+                            parents[stations[i]] = node;
+                        }
+                    }
+                }
+
+                visited.add(node);
+                node = Object.keys(distances)
+                    .filter(station => !visited.has(station))
+                    .reduce((min, station) => {
+                        return distances[station] < distances[min] ? station : min;
+                    }, null);
+            }
+
+            let path = [];
+            for (let at = end; at; at = parents[at]) {
+                path.unshift(at);
+            }
+
+            return { path, distance: distances[end] };
+        }
+
+        document.getElementById("find-path").addEventListener("click", () => {
+            const start = document.getElementById("start").value;
+            const end = document.getElementById("end").value;
+
+            if (!start || !end || start === end) {
+                alert("Please select valid stations.");
+                return;
+            }
+
+            const result = dijkstra(start, end);
+            if (result.distance === Infinity) {
+                alert("No path found between the selected stations.");
+                return;
+            }
+
+            document.getElementById("route-name").innerText = result.path.join(" → ");
+            document.getElementById("estimated-time").innerText = `${(result.distance / 30 * 60).toFixed(0)} minutes`;
+            document.querySelector(".distance").innerText = `${result.distance.toFixed(2)} km`;
+            document.getElementById("result").style.display = "block";
+
+            const latlngs = result.path.map(station => stationCoordinates[station]);
+            L.polyline(latlngs, { color: 'blue', weight: 5 }).addTo(map);
+            map.fitBounds(latlngs);
+
+            const stationList = document.getElementById("station-list");
+            stationList.innerHTML = "";
+            result.path.forEach(station => {
+                stationList.innerHTML += `<li>${station}</li>`;
+            });
+        });
+    </script>
+</body>
+</html>
