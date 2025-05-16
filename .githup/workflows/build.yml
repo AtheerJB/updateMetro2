@@ -1,8 +1,8 @@
 on: push
+
 jobs:
   build-node:
-  first-job:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     container: node:14
     steps:
       - run: node --version
