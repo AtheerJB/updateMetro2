@@ -76,6 +76,6 @@ function showFaceIDOptions() {
     } else {
         alert("Error! Redirecting to traditional login.");
         document.getElementById("authModal").style.display = "flex";
-        showLoginForm();
+        showLoginForm(); 
     }
 }
