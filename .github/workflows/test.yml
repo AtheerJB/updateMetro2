@@ -28,11 +28,7 @@ jobs:
       - name: Run Playwright Tests
         run: npx playwright test --reporter=html
 
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: playwright-report
-          path: playwright-report
+ 
 
   download:
     needs: test
