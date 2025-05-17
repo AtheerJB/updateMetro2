@@ -8,14 +8,15 @@ function modifyBooking({ price, email }) {
   }
 
   const numericPrice = Number(price);
+
+  if (numericPrice < 0) {
+    return "Error: Invalid price";
+  }
+
   if (isNaN(numericPrice) || numericPrice < 10 || numericPrice > 500) {
     return numericPrice < 10
       ? "Error: Price too low"
       : "Error: Price exceeds limit";
-  }
-
-  if (numericPrice < 0) {
-    return "Error: Invalid price";
   }
 
   return "Booking modified successfully";

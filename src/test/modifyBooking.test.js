@@ -1,5 +1,4 @@
-const modifyBooking = require('../src/modifyBooking');
-
+const modifyBooking = require('../modifyBooking');
 describe("Modify Booking", () => {
   test("Price field is missing", () => {
     expect(modifyBooking({ price: "", email: "user@mail.com" }))
